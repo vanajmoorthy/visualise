@@ -70,8 +70,8 @@ function draw() {
 
 		fill("fff");
 		text(constrain(micLevel * 28, 0.1, 2.1), 10, 10);
-		velX[ballA] = velX[ballA] * constrain(micLevel * 30, 0.1, 2.1) + accellX * mass[ballA];
-		velY[ballA] = velY[ballA] * constrain(micLevel * 30, 0.1, 2.1) + accelY * mass[ballA];
+		velX[ballA] = velX[ballA] * constrain(micLevel * 28, 0.1, 2.1) + accellX * mass[ballA];
+		velY[ballA] = velY[ballA] * constrain(micLevel * 28, 0.1, 2.1) + accelY * mass[ballA];
 	}
 
 	for (var particle = 0; particle < mass.length; particle++) {
