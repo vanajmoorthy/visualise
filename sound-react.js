@@ -70,13 +70,13 @@ function draw() {
 
 		fill("fff");
 		text(constrain(micLevel * 28, 0.1, 2.1), 10, 10);
-		velX[ballA] = velX[ballA] * constrain(micLevel * 28, 0.1, 2.1) + accellX * mass[ballA];
-		velY[ballA] = velY[ballA] * constrain(micLevel * 28, 0.1, 2.1) + accelY * mass[ballA];
+		velX[ballA] = velX[ballA] * constrain(micLevel * 30, 0.1, 2.1) + accellX * mass[ballA];
+		velY[ballA] = velY[ballA] * constrain(micLevel * 30, 0.1, 2.1) + accelY * mass[ballA];
 	}
 
 	for (var particle = 0; particle < mass.length; particle++) {
-		posX[particle] = constrain(posX[particle] + velX[particle], 0, 1920);
-		posY[particle] = constrain(posY[particle] + velY[particle], 0, 1080);
+		posX[particle] = constrain(posX[particle] + velX[particle], 0, 1500);
+		posY[particle] = constrain(posY[particle] + velY[particle], 0, 700);
 		ballColour.push(color(random(0, 255), random(0, 255), random(0, 255)));
 		fill(ballColour[particle]);
 		ellipse(
@@ -91,8 +91,8 @@ function draw() {
 function addNewParticle() {
 	if (!hidePromptTime) hidePromptTime = millis();
 	mass.push(random(0.003, 0.03));
-	posX.push(constrain(mouseX, 0, 1920));
-	posY.push(constrain(mouseY, 0, 1080));
+	posX.push(mouseX);
+	posY.push(mouseY);
 	velX.push(0);
 	velY.push(0);
 }
