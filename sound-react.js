@@ -20,6 +20,9 @@ function setup() {
 
 	mic = new p5.AudioIn();
 	mic.start();
+
+	slider = createSlider(0, 30, 10);
+	slider.position(18, 30);
 }
 
 function draw() {
@@ -34,12 +37,12 @@ function draw() {
 
 	fill(255, 255, 255, alpha);
 	textFont(font);
-	textSize(35);
-
+	textSize(25);
+	textAlign(CENTER);
 	text(
-		"Please click the screen to generate some balls.",
-		windowWidth / 2 - 370,
-		windowHeight / 2
+		"Please click the screen to \ngenerate some balls.",
+		windowWidth / 2 - 10,
+		windowHeight / 2 - 15
 	);
 
 	pop();
@@ -66,17 +69,17 @@ function draw() {
 		}
 
 		micLevel = mic.getLevel();
-		console.log(micLevel);
+		// console.log(micLevel);
 
 		fill("fff");
-		text(constrain(micLevel * 28, 0.1, 2.1), 10, 10);
-		velX[ballA] = velX[ballA] * constrain(micLevel * 30, 0.1, 2.1) + accellX * mass[ballA];
-		velY[ballA] = velY[ballA] * constrain(micLevel * 30, 0.1, 2.1) + accelY * mass[ballA];
+		text("Db: " + constrain(micLevel * 28, 0.1, 2.1), 10, 10);
+		velX[ballA] = velX[ballA] * constrain(micLevel * slider.value(), 0.1, 2.1) + accellX * mass[ballA];
+		velY[ballA] = velY[ballA] * constrain(micLevel * slider.value(), 0.1, 2.1) + accelY * mass[ballA];
 	}
 
 	for (var particle = 0; particle < mass.length; particle++) {
-		posX[particle] = constrain(posX[particle] + velX[particle], 0, 1500);
-		posY[particle] = constrain(posY[particle] + velY[particle], 0, 700);
+		posX[particle] = constrain(posX[particle] + velX[particle], 0, windowWidth - 20);
+		posY[particle] = constrain(posY[particle] + velY[particle], 0, windowHeight - 20);
 		ballColour.push(color(random(0, 255), random(0, 255), random(0, 255)));
 		fill(ballColour[particle]);
 		ellipse(
@@ -90,11 +93,15 @@ function draw() {
 
 function addNewParticle() {
 	if (!hidePromptTime) hidePromptTime = millis();
-	mass.push(random(0.003, 0.03));
-	posX.push(mouseX);
-	posY.push(mouseY);
-	velX.push(0);
-	velY.push(0);
+
+	if (mouseX > 220 || mouseY > 100) {
+		mass.push(random(0.003, 0.03));
+		posX.push(constrain(mouseX, 0, windowWidth));
+		posY.push(constrain(mouseY, 0, windowHeight));
+		velX.push(0);
+		velY.push(0);
+	}
+	
 }
 
 function mouseClicked() {
