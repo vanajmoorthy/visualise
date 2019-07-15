@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 input[type=range] {
     position: fixed;
     color: #333333;
